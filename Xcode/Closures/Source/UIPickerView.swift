@@ -20,6 +20,7 @@
 
 import UIKit
 
+#if !os(tvOS)
 fileprivate final class PickerViewDelegate: NSObject, UIPickerViewDelegate, UIPickerViewDataSource, DelegateProtocol {
     static var delegates = Set<DelegateWrapper<UIPickerView, PickerViewDelegate>>()
     
@@ -552,4 +553,4 @@ extension UIPickerView: DelegatorProtocol {
         delegator.dataSource = delegate
     }
 }
-
+#endif

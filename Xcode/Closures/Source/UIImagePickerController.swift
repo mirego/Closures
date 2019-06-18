@@ -22,6 +22,7 @@ import UIKit
 import MobileCoreServices
 import PhotosUI
 
+#if !os(tvOS)
 fileprivate final class ImagePickerControllerDelegate: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate, DelegateProtocol {
     static var delegates = Set<DelegateWrapper<UIImagePickerController, ImagePickerControllerDelegate>>()
     
@@ -366,3 +367,4 @@ extension UIImagePickerController: DelegatorProtocol {
         delegator.delegate = delegate
     }
 }
+#endif

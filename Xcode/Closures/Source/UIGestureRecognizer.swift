@@ -60,6 +60,7 @@ public func configure<T>(gesture: T, handler: @escaping (_ gesture: T) -> Void)
 }
 
 extension UITapGestureRecognizer {
+    #if !os(tvOS)
     /**
      A convenience initializer for a UITapGestureRecognizer so that it
      can be configured with a single line of code.
@@ -76,10 +77,26 @@ extension UITapGestureRecognizer {
         numberOfTapsRequired = tapsRequired
         numberOfTouchesRequired = touchesRequired
     }
+    #else
+    /**
+     A convenience initializer for a UITapGestureRecognizer so that it
+     can be configured with a single line of code.
+     
+     * parameter tapsRequired: Defaults UITapGestureRecognizer's `numberOfTapsRequired` property value
+     * parameter handler: The closure that is called when the gesture is recognized
+     */
+    public convenience init(tapsRequired: Int = 1,
+                            handler: @escaping (_ gesture: UITapGestureRecognizer) -> Void) {
+        self.init()
+        configure(gesture: self, handler: handler)
+        numberOfTapsRequired = tapsRequired
+    }
+    #endif
 }
 
 extension UIView {
     // MARK: Add Gesture Convenience
+    #if !os(tvOS)
     /**
      A convenience method that adds a UITapGestureRecognizer to a view, while also
      passing default values to its convenience initializer.
@@ -101,9 +118,30 @@ extension UIView {
         addGestureRecognizer(gesture)
         return gesture
     }
+    #else
+    /**
+     A convenience method that adds a UITapGestureRecognizer to a view, while also
+     passing default values to its convenience initializer.
+     
+     * parameter tapsRequired: Defaults UITapGestureRecognizer's `numberOfTapsRequired` property value
+     * parameter handler: The closure that is called when the gesture is recognized
+     
+     * returns: The gesture that was created so that it can be used to daisy chain other
+     customizations
+     */
+    @discardableResult
+    public func addTapGesture(tapsRequired: Int = 1,
+                              handler: @escaping (_ gesture: UITapGestureRecognizer) -> Void) -> UITapGestureRecognizer {
+        let gesture = UITapGestureRecognizer(tapsRequired: tapsRequired,
+                                             handler: handler)
+        addGestureRecognizer(gesture)
+        return gesture
+    }
+    #endif
 }
 
 extension UILongPressGestureRecognizer {
+    #if !os(tvOS)
     /**
      A convenience initializer for a UILongPressGestureRecognizer so that it
      can be configured with a single line of code.
@@ -126,9 +164,31 @@ extension UILongPressGestureRecognizer {
         minimumPressDuration = minDuration
         self.allowableMovement = allowableMovement
     }
+    #else
+    /**
+     A convenience initializer for a UILongPressGestureRecognizer so that it
+     can be configured with a single line of code.
+     
+     * parameter tapsRequired: Defaults UILongPressGestureRecognizer's `numberOfTapsRequired` property value
+     * parameter minDuration: Defaults UILongPressGestureRecognizer's `minimumPressDuration` property value
+     * parameter allowableMovement: Defaults UILongPressGestureRecognizer's `allowableMovement` property value
+     * parameter handler: The closure that is called when the gesture is recognized
+     */
+    public convenience init(tapsRequired: Int = 0,
+                            minDuration: CFTimeInterval = 0.5,
+                            allowableMovement: CGFloat = 10,
+                            handler: @escaping (_ gesture: UILongPressGestureRecognizer) -> Void) {
+        self.init()
+        configure(gesture: self, handler: handler)
+        numberOfTapsRequired = tapsRequired
+        minimumPressDuration = minDuration
+        self.allowableMovement = allowableMovement
+    }
+    #endif
 }
 
 extension UIView {
+    #if !os(tvOS)
     /**
      A convenience method that adds a UILongPressGestureRecognizer to a view, while also
      passing default values to its convenience initializer.
@@ -156,8 +216,35 @@ extension UIView {
         addGestureRecognizer(gesture)
         return gesture
     }
+    #else
+    /**
+     A convenience method that adds a UILongPressGestureRecognizer to a view, while also
+     passing default values to its convenience initializer.
+     
+     * parameter tapsRequired: Defaults UILongPressGestureRecognizer's `numberOfTapsRequired` property value
+     * parameter minDuration: Defaults UILongPressGestureRecognizer's `minimumPressDuration` property value
+     * parameter allowableMovement: Defaults UILongPressGestureRecognizer's `allowableMovement` property value
+     * parameter handler: The closure that is called when the gesture is recognized
+     
+     * returns: The gesture that was created so that it can be used to daisy chain other
+     customizations
+     */
+    @discardableResult
+    public func addLongPressGesture(tapsRequired: Int = 0,
+                                    minDuration: CFTimeInterval = 0.5,
+                                    allowableMovement: CGFloat = 10,
+                                    handler: @escaping (_ gesture: UILongPressGestureRecognizer) -> Void) -> UILongPressGestureRecognizer {
+        let gesture = UILongPressGestureRecognizer(tapsRequired: tapsRequired,
+                                                   minDuration: minDuration,
+                                                   allowableMovement: allowableMovement,
+                                                   handler: handler)
+        addGestureRecognizer(gesture)
+        return gesture
+    }
+    #endif
 }
 
+#if !os(tvOS)
 extension UIPinchGestureRecognizer {
     /**
      A convenience initializer for a UIPinchGestureRecognizer so that it
@@ -188,8 +275,10 @@ extension UIView {
         return gesture
     }
 }
+#endif
 
 extension UISwipeGestureRecognizer {
+    #if !os(tvOS)
     /**
      A convenience initializer for a UISwipeGestureRecognizer so that it
      can be configured with a single line of code.
@@ -206,9 +295,25 @@ extension UISwipeGestureRecognizer {
         self.direction = direction
         self.numberOfTouchesRequired = touchesRequired
     }
+    #else
+    /**
+     A convenience initializer for a UISwipeGestureRecognizer so that it
+     can be configured with a single line of code.
+     
+     * parameter direction: Defaults UISwipeGestureRecognizer's `direction` property value
+     * parameter handler: The closure that is called when the gesture is recognized
+     */
+    public convenience init(direction: UISwipeGestureRecognizer.Direction = .right,
+                            handler: @escaping (_ gesture: UISwipeGestureRecognizer) -> Void) {
+        self.init()
+        configure(gesture: self, handler: handler)
+        self.direction = direction
+    }
+    #endif
 }
 
 extension UIView {
+    #if !os(tvOS)
     /**
      A convenience method that adds a UISwipeGestureRecognizer to a view, while also
      passing default values to its convenience initializer.
@@ -230,8 +335,29 @@ extension UIView {
         addGestureRecognizer(gesture)
         return gesture
     }
+    #else
+    /**
+     A convenience method that adds a UISwipeGestureRecognizer to a view, while also
+     passing default values to its convenience initializer.
+     
+     * parameter direction: Defaults UISwipeGestureRecognizer's `direction` property value
+     * parameter handler: The closure that is called when the gesture is recognized
+     
+     * returns: The gesture that was created so that it can be used to daisy chain other
+     customizations
+     */
+    @discardableResult
+    public func addSwipeGesture(direction: UISwipeGestureRecognizer.Direction = .right,
+                                handler: @escaping (_ gesture: UISwipeGestureRecognizer) -> Void) -> UISwipeGestureRecognizer {
+        let gesture = UISwipeGestureRecognizer(direction: direction,
+                                               handler: handler)
+        addGestureRecognizer(gesture)
+        return gesture
+    }
+    #endif
 }
 
+#if !os(tvOS)
 extension UIRotationGestureRecognizer {
     /**
      A convenience initializer for a UIRotationGestureRecognizer so that it
@@ -262,8 +388,10 @@ extension UIView {
         return gesture
     }
 }
+#endif
 
 extension UIPanGestureRecognizer {
+    #if !os(tvOS)
     /**
      A convenience initializer for a UIPanGestureRecognizer so that it
      can be configured with a single line of code.
@@ -280,9 +408,22 @@ extension UIPanGestureRecognizer {
         minimumNumberOfTouches = minTouches
         maximumNumberOfTouches = maxTouches
     }
+    #else
+    /**
+     A convenience initializer for a UIPanGestureRecognizer so that it
+     can be configured with a single line of code.
+     
+     * parameter handler: The closure that is called when the gesture is recognized
+     */
+    public convenience init(handler: @escaping (_ gesture: UIPanGestureRecognizer) -> Void) {
+        self.init()
+        configure(gesture: self, handler: handler)
+    }
+    #endif
 }
 
 extension UIView {
+    #if !os(tvOS)
     /**
      A convenience method that adds a UIPanGestureRecognizer to a view, while also
      passing default values to its convenience initializer.
@@ -304,8 +445,26 @@ extension UIView {
         addGestureRecognizer(gesture)
         return gesture
     }
+    #else
+    /**
+     A convenience method that adds a UIPanGestureRecognizer to a view, while also
+     passing default values to its convenience initializer.
+     
+     * parameter handler: The closure that is called when the gesture is recognized
+     
+     * returns: The gesture that was created so that it can be used to daisy chain other
+     customizations
+     */
+    @discardableResult
+    public func addPanGesture(handler: @escaping (_ gesture: UIPanGestureRecognizer) -> Void) -> UIPanGestureRecognizer {
+        let gesture = UIPanGestureRecognizer(handler: handler)
+        addGestureRecognizer(gesture)
+        return gesture
+    }
+    #endif
 }
 
+#if !os(tvOS)
 extension UIScreenEdgePanGestureRecognizer {
     /**
      A convenience initializer for a UIScreenEdgePanGestureRecognizer so that it
@@ -342,6 +501,7 @@ extension UIView {
         return gesture
     }
 }
+#endif
 
 fileprivate final class GestureRecognizerDelegate: NSObject, UIGestureRecognizerDelegate, DelegateProtocol {
     static var delegates = Set<DelegateWrapper<UIGestureRecognizer, GestureRecognizerDelegate>>()

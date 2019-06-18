@@ -197,6 +197,7 @@ class CollectionViewDelegate: ScrollViewDelegate, UICollectionViewDelegateFlowLa
     func collectionView(_ collectionView: UICollectionView, targetContentOffsetForProposedContentOffset proposedContentOffset: CGPoint) -> CGPoint {
         return targetContentOffsetForProposedContentOffset?(proposedContentOffset) ?? proposedContentOffset
     }
+    #if !os(tvOS)
     private var _shouldSpringLoadItemAt: Any?
     @available(iOS 11, *)
     fileprivate var shouldSpringLoadItemAt: ((_ indexPath: IndexPath, _ context: UISpringLoadedInteractionContext) -> Bool)? {
@@ -211,6 +212,7 @@ class CollectionViewDelegate: ScrollViewDelegate, UICollectionViewDelegateFlowLa
     func collectionView(_ collectionView: UICollectionView, shouldSpringLoadItemAt indexPath: IndexPath, with context: UISpringLoadedInteractionContext) -> Bool {
         return shouldSpringLoadItemAt?(indexPath, context) ?? true
     }
+    #endif
     fileprivate var numberOfItemsInSection: ((_ section: Int) -> Int)?
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return numberOfItemsInSection?(section) ?? 0
@@ -271,8 +273,10 @@ class CollectionViewDelegate: ScrollViewDelegate, UICollectionViewDelegateFlowLa
     override func responds(to aSelector: Selector!) -> Bool {
         if #available(iOS 11, *) {
             switch aSelector {
+                #if !os(tvOS)
             case #selector(CollectionViewDelegate.collectionView(_:shouldSpringLoadItemAt:with:)):
                 return _shouldSpringLoadItemAt != nil
+                #endif
             default:
                 break
             }
@@ -588,6 +592,7 @@ extension UICollectionView {
     public func targetContentOffsetForProposedContentOffset(handler: @escaping (_ proposedContentOffset: CGPoint) -> CGPoint) -> Self {
         return update { $0.targetContentOffsetForProposedContentOffset = handler }
     }
+    #if !os(tvOS)
     /**
      Equivalent to implementing UICollectionViewDelegate's collectionView(_:shouldSpringLoadItemAt:with:) method
      
@@ -599,6 +604,7 @@ extension UICollectionView {
     public func shouldSpringLoadItemAt(handler: @escaping (_ indexPath: IndexPath, _ context: UISpringLoadedInteractionContext) -> Bool) -> Self {
         return update { $0.shouldSpringLoadItemAt = handler }
     }
+    #endif
     /**
      Equivalent to implementing UICollectionViewDataSource's collectionView(_:numberOfItemsInSection:) method
      
