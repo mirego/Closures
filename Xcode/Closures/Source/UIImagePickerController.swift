@@ -23,6 +23,7 @@ import MobileCoreServices
 import PhotosUI
 
 #if !os(tvOS)
+@available(iOS 9.0, *)
 fileprivate final class ImagePickerControllerDelegate: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate, DelegateProtocol {
     static var delegates = Set<DelegateWrapper<UIImagePickerController, ImagePickerControllerDelegate>>()
     
@@ -50,6 +51,7 @@ fileprivate final class ImagePickerControllerDelegate: NSObject, UIImagePickerCo
     }
 }
 
+@available(iOS 9.0, *)
 extension UIImagePickerController {
     // MARK: Convenient Presenting
     /**
@@ -170,6 +172,7 @@ extension UIImagePickerController {
     }
 }
 
+@available(iOS 9.0, *)
 extension UIImagePickerController {
     // MARK: Delegate Overrides
     /**
@@ -197,6 +200,7 @@ extension UIImagePickerController {
     }
 }
 
+@available(iOS 9.0, *)
 extension UIImagePickerController {
     // MARK: Helper Types
     /**
@@ -318,6 +322,7 @@ extension UIImagePickerController {
     }
 }
 
+@available(iOS 9.0, *)
 extension UIImagePickerController.MediaFilter: ExpressibleByIntegerLiteral {
     /// :nodoc:
     public init(integerLiteral value: Int) {
@@ -325,6 +330,7 @@ extension UIImagePickerController.MediaFilter: ExpressibleByIntegerLiteral {
     }
 }
 
+@available(iOS 9.0, *)
 fileprivate extension CFString {
     var mediaFilter: UIImagePickerController.MediaFilter {
         switch self {
@@ -338,6 +344,7 @@ fileprivate extension CFString {
     }
 }
 
+@available(iOS 9.0, *)
 extension UIImagePickerController: DelegatorProtocol {
     @discardableResult
     fileprivate func update(handler: (_ delegate: ImagePickerControllerDelegate) -> Void) -> Self {

@@ -23,6 +23,7 @@ import UIKit
 /// :nodoc:
 private let jzyBug = 0 // Prevent the license header from showing up in Jazzy Docs for UICollectionView
 
+@available(iOS 9.0, *)
 extension UICollectionView {
     // MARK: Common Array Usage
     /**
@@ -110,6 +111,7 @@ extension UICollectionView {
     }
 }
 
+@available(iOS 9.0, *)
 class CollectionViewDelegate: ScrollViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     fileprivate static var delegates = Set<DelegateWrapper<UICollectionView, CollectionViewDelegate>>()
 
@@ -359,6 +361,7 @@ class CollectionViewDelegate: ScrollViewDelegate, UICollectionViewDelegateFlowLa
     }
 }
 
+@available(iOS 9.0, *)
 extension UICollectionView {
     // MARK: Delegate and DataSource Overrides
     /**
@@ -761,6 +764,7 @@ extension UICollectionView {
     }
 }
 
+@available(iOS 9.0, *)
 extension UICollectionView {
     @discardableResult
     @objc override func update(handler: (_ delegate: CollectionViewDelegate) -> Void) -> Self {
