@@ -384,10 +384,12 @@ class TableViewDelegate: ScrollViewDelegate, UITableViewDelegate, UITableViewDat
 
         if #available(iOS 13, *) {
             switch aSelector {
+                #if !os(tvOS)
             case #selector(TableViewDelegate.tableView(_:shouldBeginMultipleSelectionInteractionAt:)):
                 return _shouldBeginMultipleSelectionInteractionAt != nil
             case #selector(TableViewDelegate.tableView(_:didBeginMultipleSelectionInteractionAt:)):
                 return _didBeginMultipleSelectionInteractionAt != nil
+                #endif
             case #selector(TableViewDelegate.tableView(_:didEndEditingRowAt:)):
                 return _didEndMultipleSelectionInteraction != nil
             default:
@@ -395,8 +397,10 @@ class TableViewDelegate: ScrollViewDelegate, UITableViewDelegate, UITableViewDat
             }
         } else {
             switch aSelector {
+                #if !os(tvOS)
                 case #selector(TableViewDelegate.tableView(_:editActionsForRowAt:)):
                     return editActionsForRowAt != nil
+                #endif
                 case #selector(TableViewDelegate.tableView(_:shouldShowMenuForRowAt:)):
                     return shouldShowMenuForRowAt != nil
                 case #selector(TableViewDelegate.tableView(_:canPerformAction:forRowAt:withSender:)):
