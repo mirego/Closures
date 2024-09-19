@@ -462,10 +462,6 @@ class TableViewDelegate: ScrollViewDelegate, UITableViewDelegate, UITableViewDat
             return editingStyleForRowAt != nil
         case #selector(TableViewDelegate.tableView(_:titleForDeleteConfirmationButtonForRowAt:)):
             return titleForDeleteConfirmationButtonForRowAt != nil
-            #if !os(tvOS)
-        case #selector(TableViewDelegate.tableView(_:editActionsForRowAt:)):
-            return editActionsForRowAt != nil
-            #endif
         case #selector(TableViewDelegate.tableView(_:shouldIndentWhileEditingRowAt:)):
             return shouldIndentWhileEditingRowAt != nil
         case #selector(TableViewDelegate.tableView(_:willBeginEditingRowAt:)):
